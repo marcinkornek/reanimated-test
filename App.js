@@ -1,49 +1,82 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- *
- * @format
- * @flow
- */
-
-import React, {Component} from 'react';
-import {Platform, StyleSheet, Text, View} from 'react-native';
-
-const instructions = Platform.select({
-  ios: 'Press Cmd+R to reload,\n' + 'Cmd+D or shake for dev menu',
-  android:
-    'Double tap R on your keyboard to reload,\n' +
-    'Shake or press menu button for dev menu',
-});
-
-type Props = {};
-export default class App extends Component<Props> {
-  render() {
-    return (
-      <View style={styles.container}>
-        <Text style={styles.welcome}>Welcome to React Native!</Text>
-        <Text style={styles.instructions}>To get started, edit App.js</Text>
-        <Text style={styles.instructions}>{instructions}</Text>
-      </View>
-    );
-  }
-}
+import React, { Component } from 'react';
+import { Button, StyleSheet, TouchableOpacity, Text, View } from 'react-native';
+import DroppedArea from './app/components/DroppedArea'
+import ClickedSquare from './app/components/ClickedSquare'
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#F5FCFF',
+    position: 'relative'
   },
-  welcome: {
-    fontSize: 20,
-    textAlign: 'center',
-    margin: 10,
+  closeButton: {
+    position: 'absolute',
+    top: 50,
+    left: 20
   },
-  instructions: {
-    textAlign: 'center',
-    color: '#333333',
-    marginBottom: 5,
-  },
-});
+  buttonsContainer: {
+    marginTop: 50
+  }
+})
+
+class App extends Component {
+  state = {
+    component: undefined
+  }
+
+  renderCloseButton = () => (
+    <TouchableOpacity
+      onPress={() => this.setState({ component: undefined })}
+      style={styles.closeButton}
+    >
+      <Text>X</Text>
+    </TouchableOpacity>
+  )
+
+  renderButtons = () => (
+    <View style={styles.buttonsContainer}>
+      <Button
+        onPress={() => this.setState({ component: 'droppedArea' })}
+        title="Dropped Area"
+        color="red"
+      />
+      <Button
+        onPress={() => this.setState({ component: 'clickedSquare' })}
+        title="Clicked Square"
+        color="blue"
+      />
+    </View>
+  )
+
+  renderDroppedArea = () => {
+    return (
+      <View style={styles.container}>
+        <DroppedArea />
+        {this.renderCloseButton()}
+      </View>
+    )
+  }
+
+  renderClickedSquare = () => {
+    return (
+      <View style={styles.container}>
+        <ClickedSquare />
+        {this.renderCloseButton()}
+      </View>
+    )
+  }
+
+  render() {
+    const { component } = this.state
+
+    switch (component) {
+      case 'droppedArea':
+        return this.renderDroppedArea()
+      case 'clickedSquare':
+        return this.renderClickedSquare()
+      default:
+        return this.renderButtons()
+    }
+  }
+}
+
+export default App
