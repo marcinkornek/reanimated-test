@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Button, StyleSheet, TouchableOpacity, Text, View } from 'react-native';
 import DroppedArea from './app/components/DroppedArea'
 import ClickedSquare from './app/components/ClickedSquare'
+import Transitions from './app/components/Transitions'
 
 const styles = StyleSheet.create({
   container: {
@@ -44,6 +45,11 @@ class App extends Component {
         title="Clicked Square"
         color="blue"
       />
+      <Button
+        onPress={() => this.setState({ component: 'transitions' })}
+        title="Transitions"
+        color="green"
+      />
     </View>
   )
 
@@ -65,6 +71,15 @@ class App extends Component {
     )
   }
 
+  renderTransitions = () => {
+    return (
+      <View style={styles.container}>
+        <Transitions />
+        {this.renderCloseButton()}
+      </View>
+    )
+  }
+
   render() {
     const { component } = this.state
 
@@ -73,6 +88,8 @@ class App extends Component {
         return this.renderDroppedArea()
       case 'clickedSquare':
         return this.renderClickedSquare()
+      case 'transitions':
+        return this.renderTransitions()
       default:
         return this.renderButtons()
     }
