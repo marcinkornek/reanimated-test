@@ -36,9 +36,9 @@ class App extends Component {
   renderButtons = () => (
     <View style={styles.buttonsContainer}>
       <Button
-        onPress={() => this.setState({ component: 'droppedArea' })}
-        title="Dropped Area"
-        color="red"
+        onPress={() => this.setState({ component: 'transitions' })}
+        title="Transitions"
+        color="green"
       />
       <Button
         onPress={() => this.setState({ component: 'clickedSquare' })}
@@ -46,17 +46,17 @@ class App extends Component {
         color="blue"
       />
       <Button
-        onPress={() => this.setState({ component: 'transitions' })}
-        title="Transitions"
-        color="green"
+        onPress={() => this.setState({ component: 'droppedArea' })}
+        title="Dropped Area"
+        color="red"
       />
     </View>
   )
 
-  renderDroppedArea = () => {
+  renderTransitions = () => {
     return (
       <View style={styles.container}>
-        <DroppedArea />
+        <Transitions />
         {this.renderCloseButton()}
       </View>
     )
@@ -71,10 +71,10 @@ class App extends Component {
     )
   }
 
-  renderTransitions = () => {
+  renderDroppedArea = () => {
     return (
       <View style={styles.container}>
-        <Transitions />
+        <DroppedArea />
         {this.renderCloseButton()}
       </View>
     )
@@ -84,12 +84,12 @@ class App extends Component {
     const { component } = this.state
 
     switch (component) {
-      case 'droppedArea':
-        return this.renderDroppedArea()
-      case 'clickedSquare':
-        return this.renderClickedSquare()
       case 'transitions':
         return this.renderTransitions()
+      case 'clickedSquare':
+        return this.renderClickedSquare()
+      case 'droppedArea':
+        return this.renderDroppedArea()
       default:
         return this.renderButtons()
     }
